@@ -1,0 +1,28 @@
+import { NextRequest, NextResponse } from 'next/server';
+import { prisma } from '@/lib/prisma';
+import { verifyJwt } from '@/lib/auth';
+
+export async function GET(req: NextRequest) {
+  const token = req.headers.get('authorization')?.replace('Bearer ', '');
+  const user = token && verifyJwt(token);
+  if (!user || user.role !== 'ADMIN') {
+    return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
+  }
+  const users = await prisma.user.findMany({ include: { wishes: true } });
+  let csv = 'User ID,Full Name,Email,Wishes Count\n';
+  for (const u of users) {
+    csv += `${u.id},${u.fullName},${u.email},${u.wishes.length}\n`;
+  }
+  csv += '\nWish ID,Product Name,Product Link,Description,Purchased,User ID\n';
+  for (const u of users) {
+    for (const w of u.wishes) {
+      csv += `${w.id},${w.productName},${w.productLink},${w.description || ''},${w.purchased},${w.userId}\n`;
+    }
+  }
+  return new NextResponse(csv, {
+    headers: {
+      'Content-Type': 'text/csv',
+      'Content-Disposition': 'attachment; filename="export.csv"',
+    },
+  });
+}
