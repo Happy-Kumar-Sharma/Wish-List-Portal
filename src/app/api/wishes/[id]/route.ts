@@ -3,11 +3,12 @@ import { prisma } from '@/lib/prisma';
 import { verifyJwt } from '@/lib/auth';
 
 // PATCH: Edit wish, DELETE: Delete wish, POST: Mark as purchased
-export async function PATCH(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
   const token = req.headers.get('authorization')?.replace('Bearer ', '');
   const user = token && verifyJwt(token);
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const wish = await prisma.wish.findUnique({ where: { id: Number(params.id) } });
+  const wish = await prisma.wish.findUnique({ where: { id: Number(id) } });
   if (!wish || wish.userId !== user.id || wish.purchased) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
@@ -19,11 +20,12 @@ export async function PATCH(req: NextRequest, { params }: { params: { id: string
   return NextResponse.json(updated);
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(req: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params;
   const token = req.headers.get('authorization')?.replace('Bearer ', '');
   const user = token && verifyJwt(token);
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const wish = await prisma.wish.findUnique({ where: { id: Number(params.id) } });
+  const wish = await prisma.wish.findUnique({ where: { id: Number(id) } });
   if (!wish || wish.userId !== user.id || wish.purchased) {
     return NextResponse.json({ error: 'Forbidden' }, { status: 403 });
   }
@@ -31,12 +33,13 @@ export async function DELETE(req: NextRequest, { params }: { params: { id: strin
   return NextResponse.json({ message: 'Deleted' });
 }
 
-export async function POST(req: NextRequest, { params }: { params: { id: string } }) {
+export async function POST(req: NextRequest, context: { params: Promise<{ id: string }> }) {
   // Mark as purchased
+  const { id } = await context.params;
   const token = req.headers.get('authorization')?.replace('Bearer ', '');
   const user = token && verifyJwt(token);
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
-  const wish = await prisma.wish.findUnique({ where: { id: Number(params.id) } });
+  const wish = await prisma.wish.findUnique({ where: { id: Number(id) } });
   if (!wish || wish.purchased) {
     return NextResponse.json({ error: 'Already purchased or not found' }, { status: 400 });
   }
