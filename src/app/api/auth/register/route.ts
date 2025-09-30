@@ -17,18 +17,18 @@ export async function POST(req: NextRequest) {
     data: { fullName, email, password: hashed },
   });
   // Send welcome email using FormSubmit
-  await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(email)}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: JSON.stringify({
-      name: fullName,
-      email,
-      subject: 'Welcome to Wish List Portal',
-      message: `Hello ${fullName},\nYour registration is successful!`
-    })
-  });
+  // await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(email)}`, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     name: fullName,
+  //     email,
+  //     subject: 'Welcome to Wish List Portal',
+  //     message: `Hello ${fullName},\nYour registration is successful!`
+  //   })
+  // });
   return NextResponse.json({ message: 'Registered', user: { id: user.id, email: user.email } });
 }
