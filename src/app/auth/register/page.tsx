@@ -18,6 +18,24 @@ export default function RegisterPage() {
     });
     const result = await res.json();
     if (res.ok) {
+      // Send welcome email using FormSubmit from the client
+      try {
+        await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(data.email)}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+          },
+          body: JSON.stringify({
+            name: data.fullName,
+            email: data.email,
+            subject: 'Welcome to Wish List Portal',
+            message: `Hello ${data.fullName},\nYour registration is successful!`
+          })
+        });
+      } catch (e) {
+        // Ignore email errors, just show toast
+      }
       toast({
         title: 'Registration Successful',
         description: 'A welcome email has been sent to your address.'
