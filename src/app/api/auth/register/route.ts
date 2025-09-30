@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { hashPassword } from '@/lib/auth';
-import { sendMail } from '@/lib/email';
+
 
 export async function POST(req: NextRequest) {
   const { fullName, email, password } = await req.json();
@@ -16,10 +16,19 @@ export async function POST(req: NextRequest) {
   const user = await prisma.user.create({
     data: { fullName, email, password: hashed },
   });
-  await sendMail({
-    to: email,
-    subject: 'Welcome to Wish List Portal',
-    html: `<p>Hello ${fullName},<br/>Your registration is successful!</p>`
+  // Send welcome email using FormSubmit
+  await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(email)}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    },
+    body: JSON.stringify({
+      name: fullName,
+      email,
+      subject: 'Welcome to Wish List Portal',
+      message: `Hello ${fullName},\nYour registration is successful!`
+    })
   });
   return NextResponse.json({ message: 'Registered', user: { id: user.id, email: user.email } });
 }
