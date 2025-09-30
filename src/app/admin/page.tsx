@@ -53,7 +53,7 @@ export default function AdminPage() {
     <>
       <StickyHeader />
       <main className="min-h-screen bg-gradient-to-br from-blue-400 via-purple-400 to-pink-400 animate-gradient-x p-6 pt-20">
-        <div className="max-w-3xl mx-auto bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-blue-200">
+        <div className="max-w mx-auto bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-blue-200">
           <h1 className="text-3xl font-extrabold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500">Admin Dashboard</h1>
           <AdminUserTable users={users} />
         </div>

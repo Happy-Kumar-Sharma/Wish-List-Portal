@@ -12,7 +12,7 @@ export default function StatsPanel({ stats }: { stats: any }) {
     { name: 'Not Purchased', value: stats.notPurchased },
   ];
   return (
-    <div className="bg-white p-6 rounded shadow max-w-2xl mx-auto my-6">
+    <div className="bg-white p-6 rounded shadow max-w mx-auto my-6">
       <h2 className="text-xl font-bold mb-4">Portal Statistics</h2>
       <div className="w-full h-64 mb-8">
         <ResponsiveContainer width="100%" height="100%">

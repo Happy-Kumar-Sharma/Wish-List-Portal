@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function WishesTable({ wishes }: { wishes: any[] }) {
   return (
-    <div className="bg-white p-6 rounded shadow max-w-2xl mx-auto my-6">
+    <div className="bg-white p-6 rounded shadow max-w mx-auto my-6">
       <h2 className="text-xl font-bold mb-4">All Wishes</h2>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-xl shadow border border-gray-200">

@@ -23,7 +23,7 @@ export default function StatsPage() {
     <>
       <StickyHeader />
       <main className="min-h-screen bg-gradient-to-br from-purple-400 via-blue-400 to-pink-400 animate-gradient-x p-6 pt-20">
-        <div className="max-w-3xl mx-auto bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-purple-200">
+        <div className="max-w mx-auto bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 border border-purple-200">
           <WishesTable wishes={stats.wishes} />
         </div>
         <style jsx global>{`

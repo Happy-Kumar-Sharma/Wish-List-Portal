@@ -51,7 +51,7 @@ export default function Home() {
       </section>
 
       {/* Main Card with Actions */}
-      <main className="w-full max-w-2xl mx-auto -mt-20 mb-10 p-12 rounded-3xl shadow-2xl bg-gradient-to-br from-blue-200 via-purple-100 to-pink-100/80 backdrop-blur-2xl border border-white/30 flex flex-col items-center animate-fade-in">
+      <main className="w-full max-w mx-auto -mt-20 mb-10 p-12 rounded-3xl shadow-2xl bg-gradient-to-br from-blue-200 via-purple-100 to-pink-100/80 backdrop-blur-2xl border border-white/30 flex flex-col items-center animate-fade-in">
         <div className="flex flex-row gap-6 w-full justify-center">
           <Link href="/auth/login" className="bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 px-10 rounded-full shadow-lg hover:scale-105 transition-transform font-semibold text-lg">Login</Link>
           <Link href="/auth/register" className="bg-gradient-to-r from-green-400 to-blue-400 text-white py-3 px-10 rounded-full shadow-lg hover:scale-105 transition-transform font-semibold text-lg">Register</Link>
